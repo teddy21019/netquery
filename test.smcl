@@ -1,0 +1,105 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/ted/Documents/Stata/netquery/test.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}25 Dec 2024, 11:49:09
+{txt}
+{com}. 
+. netquery clear
+{res}Deleted:/Users/ted/Documents/Stata/netquery/_edge_pn.dta
+Deleted:/Users/ted/Documents/Stata/netquery/_node_pn.dta
+Deleted:/Users/ted/Documents/Stata/netquery/_node_pn2.dta
+{txt}
+{com}. use edges, clear
+{txt}
+{com}. list
+{txt}
+     {c TLC}{hline 3}{c -}{hline 3}{c TRC}
+     {c |} {res}s   t {txt}{c |}
+     {c LT}{hline 3}{c -}{hline 3}{c RT}
+  1. {c |} {res}a   b {txt}{c |}
+  2. {c |} {res}a   c {txt}{c |}
+  3. {c |} {res}f   a {txt}{c |}
+     {c BLC}{hline 3}{c -}{hline 3}{c BRC}
+
+{com}. netquery setedge (s) (t), name(pn)
+{res}{txt}
+{com}. 
+. use nodes, clear
+{txt}
+{com}. list
+{txt}
+     {c TLC}{hline 10}{c -}{hline 9}{c -}{hline 7}{c -}{hline 9}{c TRC}
+     {c |} {res}node_n~e   is_manu   bscd2   labor_N {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 9}{c -}{hline 7}{c -}{hline 9}{c RT}
+  1. {c |} {res}       a         0       4       200 {txt}{c |}
+  2. {c |} {res}       b         1      23         4 {txt}{c |}
+  3. {c |} {res}       c         1      25        20 {txt}{c |}
+  4. {c |} {res}       d         1      12         5 {txt}{c |}
+     {c BLC}{hline 10}{c -}{hline 9}{c -}{hline 7}{c -}{hline 9}{c BRC}
+
+{com}. netquery setattr node_name using nodes, keep(is_manu bscd2 labor_N) name(pn)
+{res}{txt}
+{com}. 
+. 
+. netquery find (bscd2 < 8)-()-(labor_N > 10), clear name(pn)
+{res}Linking Source
+
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}               2{txt}  
+{col 5}{hline 41}
+{res}Linking Target
+
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}               1{txt}  
+{col 5}{hline 41}
+{res}{txt}
+{com}. list 
+{txt}
+     {c TLC}{hline 3}{c -}{hline 3}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}s   t   is_ma~s_   bscd2_s_   labor~s_   is_ma~t_   bscd2_t_   labor~t_ {txt}{c |}
+     {c LT}{hline 3}{c -}{hline 3}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+  1. {c |} {res}a   c          0          4        200          1         25         20 {txt}{c |}
+     {c BLC}{hline 3}{c -}{hline 3}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+
+{com}. netquery find (bscd2 < 8)-()-(labor_N < 10), clear name(pn)
+{res}Linking Source
+
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}               2{txt}  
+{col 5}{hline 41}
+{res}Linking Target
+
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}               1{txt}  
+{col 5}{hline 41}
+{res}{txt}
+{com}. list 
+{txt}
+     {c TLC}{hline 3}{c -}{hline 3}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+     {c |} {res}s   t   is_ma~s_   bscd2_s_   labor~s_   is_ma~t_   bscd2_t_   labor~t_ {txt}{c |}
+     {c LT}{hline 3}{c -}{hline 3}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+  1. {c |} {res}a   b          0          4        200          1         23          4 {txt}{c |}
+     {c BLC}{hline 3}{c -}{hline 3}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+
+{com}. cap noi netquery find (bscd2 < 8)-(sales > 10)-(labor_N < 10), clear name(pn)
+{res}{err}variable {bf}sales{sf} not found
+{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/ted/Documents/Stata/netquery/test.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}25 Dec 2024, 11:49:09
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
